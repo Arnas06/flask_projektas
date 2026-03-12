@@ -16,9 +16,9 @@ def index():
 
 # Maršrutas: kontaktų puslapis (forma)
 # Metodai: GET ir POST
-@app.route("/kontaktai")
+@app.route("/apie")
 def kontaktai():
-    return render_template("kontaktai.html")    
+    return render_template("apie.html")    
 
 # aplikacijos paleidimas
 # paleidimo metu kai debbug = True vyksta automatinis aplikacijos perkrovimas pakeitus kodą plius klaidų rodymas
