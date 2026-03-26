@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %} Komentarų puslapis {% endblock %}
+ 
+{% block turinys %}
+<h2> Komentarai </h2>
+
+<!-- Sėkmė pranešimas po sėkmingo komentaro išsaugojimo-->
+ {% if sekme %}
+<div class="success">
+    <h3> Ačiū jūsų komentaras išsaugotas! </h3>
+</div>
+{% endif %}
+
+<p> čia yra komentarų puslapis</p>
+
+<form method="post" action="{{ url_for('komentarai')}}">
+    <lable for="vardas"> Vardas </lable>
+    <input type="text" id="vardas" name="vardas" required>
+
+    <lable for="elpastas"> El.Paštas</lable>
+    <input type="email" id="elpastas" name="elpastas" required>
+    
+    <lable for="zinute"> komentaras:</lable>
+    <textarea type="zinute" id="zinute" name="zinute" required> </textarea>
+    
+    <button type="submit"> komentuoti </button>
+</form>
+
+{% endblock %}
