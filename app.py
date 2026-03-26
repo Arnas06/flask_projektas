@@ -1,7 +1,11 @@
 # app.py - pagrindinė Flask aplokacijos logika
 # ŠIAME FAILE APRAŠYTI MARŠRUTAI (routes)
 
+<<<<<<< HEAD
 from flask import Flask, render_template
+=======
+from flask import Flask, render_template, request
+>>>>>>> temp-branch
 import mysql.connector
 from mysql.connector import Error
 import os
@@ -20,6 +24,37 @@ def get_db_connection():
         database=os.getenv("DB_NAME")
     )
 
+<<<<<<< HEAD
+=======
+# Automatinis lenteles sukurimas (paleidimo metu)
+# Ši funkcija kvietčiama vieną kartą startuojant aplikacijai
+def sukurti_db_lenteles():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        lenteliu_sukurimo_db_uzklausa = """ 
+            CREATE TABLE IF NOT EXISTS komentarai (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            vardas VARCHAR(100) NOT NULL,
+            elpastas VARCHAR(150) NOT NULL,
+            zinute TEXT NOT NULL,
+            sukurta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+             """
+
+        cursor.execute(lenteliu_sukurimo_db_uzklausa)
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        print("Lentelė 'Komentarai' sekmingai sukurta")
+
+    except Error as e:
+            print("klaida kuriant lentelę", e)
+
+>>>>>>> temp-branch
 # maršrutas DB prisijungimas testas
 @app.route("/db-testas")
 def db_testas():
@@ -53,12 +88,48 @@ def apie():
 def kontaktai():
     return render_template("kontaktai.html")  
 
+<<<<<<< HEAD
 @app.route("/komentarai", methods=["GET", "POST"])
 def komentarai():
     return render_template("komentarai.html")  
+=======
+
+@app.route("/komentarai", methods=["GET", "POST"])
+def komentarai():
+    sekme = False
+    klaida = None
+
+    if request.method == "POST":
+        vardas = request.form.get("vardas")
+        elpastas = request.form.get("elpastas")
+        zinute = request.form.get("zinute")
+
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            #Įrašome nauja komentarą naudodami parametrizuotą užklausa
+            cursor.execute(
+                "INSERT INTO komentarai (vardas, elpastas, zinute) VALUES (%s, %s, %s)",
+                (vardas, elpastas, zinute)
+            )
+            conn.commit()
+
+            cursor.close()
+            conn.close()
+
+            sekme=True
+        except Error as e:
+            klaida = f"nepavyko išsaugoti komentaro: {e}"
+
+    return render_template("komentarai.html", klaida=klaida, sekme=sekme )  
+>>>>>>> temp-branch
 
 # aplikacijos paleidimas
 # paleidimo metu kai debbug = True vyksta automatinis aplikacijos perkrovimas pakeitus kodą plius klaidų rodymas
 if __name__ == "__main__":
+<<<<<<< HEAD
+=======
+    sukurti_db_lenteles()
+>>>>>>> temp-branch
     app.run(debug = True)
 

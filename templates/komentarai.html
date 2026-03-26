@@ -5,6 +5,16 @@
 {% block turinys %}
 <h2> Komentarai </h2>
 
+<<<<<<< HEAD
+=======
+<!-- Sėkmė pranešimas po sėkmingo komentaro išsaugojimo-->
+ {% if sekme %}
+<div class="success">
+    <h3> Ačiū jūsų komentaras išsaugotas! </h3>
+</div>
+{% endif %}
+
+>>>>>>> temp-branch
 <p> čia yra komentarų puslapis</p>
 
 <form method="post" action="{{ url_for('komentarai')}}">
